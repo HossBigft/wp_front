@@ -3,18 +3,6 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
   const [type, setType] = useState(filter.type || "");
@@ -54,7 +42,7 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
     const newFilter = buildFilter();
     setFilter(newFilter);
     try {
-      const response = await axios.post("/movies", newFilter);
+      const response = await axios.post("/shows", newFilter);
       console.log(response.data);
       setMovies(response.data);
     } catch (error) {
