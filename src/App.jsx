@@ -4,7 +4,7 @@ import axios from 'axios';
 // Set the base URL for Axios
 axios.defaults.baseURL = 'http://localhost:8000';
 
-const ShowSearchFilter = ({ filter, setFilter }) => {
+const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
   const [title, setTitle] = useState(filter.title || '');
   const [director, setDirector] = useState(filter.director || []);
   const [rating, setRating] = useState(filter.rating || '');
@@ -36,6 +36,7 @@ const ShowSearchFilter = ({ filter, setFilter }) => {
     try {
       const response = await axios.post('/movies', newFilter);
       console.log(response.data);
+      setMovies(response.data); // Set the movies state directly with the response data
     } catch (error) {
       console.error(error);
     }
@@ -66,13 +67,48 @@ const ShowSearchFilter = ({ filter, setFilter }) => {
   );
 };
 
+const MovieTable = ({ movies }) => {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Director(s)</th>
+          <th>Rating</th>
+          <th>Cast</th>
+          <th>Country</th>
+          <th>Release Year</th>
+          <th>Duration</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {movies.map((movie, index) => (
+          <tr key={index}>
+            <td>{movie.title}</td>
+            <td>{movie.director.join(', ')}</td>
+            <td>{movie.rating}</td>
+            <td>{movie.cast.join(', ')}</td>
+            <td>{movie.country.join(', ')}</td>
+            <td>{movie.release_year}</td>
+            <td>{movie.duration}</td>
+            <td>{movie.description}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
 const App = () => {
   const [filter, setFilter] = useState({});
+  const [movies, setMovies] = useState([]);
 
   return (
     <div>
       <h1>Movie Search</h1>
-      <ShowSearchFilter filter={filter} setFilter={setFilter} />
+      <ShowSearchFilter filter={filter} setFilter={setFilter} setMovies={setMovies} />
+      <MovieTable movies={movies} />
     </div>
   );
 };
