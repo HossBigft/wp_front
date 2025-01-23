@@ -58,7 +58,7 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
         value={type}
         onChange={(e) => setType(e.target.value)}
       >
-        <option value="">Select Type</option>
+        <option value="">Any</option>
         <option value="Movie">Movie</option>
         <option value="TV Show">TV Show</option>
       </select>
@@ -131,7 +131,7 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
         id="duration"
         value={duration}
         onChange={(e) => setDuration(e.target.value)}
-        minLength={3}
+        minLength={1}
         maxLength={10}
       />
 
