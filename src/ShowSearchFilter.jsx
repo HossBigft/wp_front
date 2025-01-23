@@ -3,7 +3,6 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
-
 const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
   const [type, setType] = useState(filter.type || "");
   const [title, setTitle] = useState(filter.title || "");
@@ -36,13 +35,17 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
     if (description) newFilter.description = description;
     return newFilter;
   };
-
+  const token = localStorage.getItem("accessToken");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newFilter = buildFilter();
     setFilter(newFilter);
     try {
-      const response = await axios.post("/shows", newFilter);
+      const response = await axios.post("/shows", newFilter, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response.data);
       setMovies(response.data);
     } catch (error) {
@@ -53,11 +56,7 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="type">Type:</label>
-      <select
-        id="type"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-      >
+      <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
         <option value="">Any</option>
         <option value="Movie">Movie</option>
         <option value="TV Show">TV Show</option>
