@@ -1,4 +1,3 @@
-
 const MovieTable = ({ movies }) => {
   return (
     <table>
@@ -18,10 +17,10 @@ const MovieTable = ({ movies }) => {
         {movies.map((movie, index) => (
           <tr key={index}>
             <td>{movie.title}</td>
-            <td>{movie.director.join(', ')}</td>
+            <td>{movie.director.join(", ")}</td>
             <td>{movie.rating}</td>
-            <td>{movie.cast.join(', ')}</td>
-            <td>{movie.country.join(', ')}</td>
+            <td>{movie.cast.join(", ")}</td>
+            <td>{movie.country.join(", ")}</td>
             <td>{movie.release_year}</td>
             <td>{movie.duration}</td>
             <td>{movie.description}</td>
