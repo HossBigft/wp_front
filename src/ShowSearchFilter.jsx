@@ -37,10 +37,10 @@ const ShowSearchFilter = ({ filter, setFilter, setMovies }) => {
       newFilter.cast = cast;
     if (country.length > 0 && country.some((c) => c.length > 0))
       newFilter.country = country;
-    if (releaseYear) newFilter.releaseYear = releaseYear;
+    if (releaseYear) newFilter.release_year = releaseYear;
     if (duration) newFilter.duration = duration;
     if (listedIn.length > 0 && listedIn.some((l) => l.length > 0))
-      newFilter.listedIn = listedIn;
+      newFilter.listed_in = listedIn;
     if (description) newFilter.description = description;
     return newFilter;
   };
